@@ -1,0 +1,21 @@
+{
+  "name": "blockchainnode",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "url-parse": "^1.4.7"
+  },
+  "devDependencies": {
+    "@types/url-parse": "^1.4.3",
+    "mocha": "^7.1.2"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "",
+  "license": "ISC"
+}
