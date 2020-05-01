@@ -2,10 +2,8 @@
 
 (async () => {
 
-    const Consensus = require('./consensus');
-    const parse = require('url-parse');
+    
     const Utils = require('./utils');
-
 
     // criando o objeto que representa o bloco da nossa blockchain
     // nosso contrutor traz os seguintes atributos 
@@ -27,11 +25,13 @@
         }
     }
 
-    // método apontado para o prototype de Block para incrementar a dificuldade do nonce e recalcular o hash 
+     // método apontado para o prototype de Block para incrementar a dificuldade do nonce e recalcular o hash 
     Block.prototype.incrementNonce = function () {
         this.nonce++;
         this.hash = Utils.calculateHash(this);
     }
+
+    
 
     // Método add ao prototype da classe Block para ajudar nos testes 
     Block.prototype.toString = function () {
@@ -44,12 +44,8 @@
             blockHash: this.blockHash
         }
         return JSON.stringify(blockDetails, Object.keys(blockDetails).sort());
-    }
-
-
+    };
 
     module.exports = Block; 
-
-
 }) ();
 

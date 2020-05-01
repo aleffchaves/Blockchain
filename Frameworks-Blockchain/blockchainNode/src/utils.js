@@ -1,4 +1,5 @@
-// aqui vamos implementar a classe que usaremos para calcular o hash do bloco
+'use strict';
+
 
 
 ( async () => {
@@ -16,19 +17,19 @@
         let blockDetails = {
             preveiouBlockHash: block.preveiouBlockHash,
             data: block.data,
-            blockIndex: block.index,
+            blockIndex: block.blockIndex,
             timestamp: block.timestamp,
-            nonce: block.nonce,
+            nonce: block.nonce
         }
-        return getSHA256HexString(JSON.stringify(blockDetails), Object.keys(blockDetails).sort());
+        return getSHA256HexString(JSON.stringify(blockDetails, Object.keys(blockDetails).sort()));
     }
 
     // exportando modulos
     module.exports = {
-        getSHA256HexString,
-        calculateHash,
-    }    
+    getSHA256HexString,
+    calculateHash
+    };    
 
 
-}) ();
+})();
 

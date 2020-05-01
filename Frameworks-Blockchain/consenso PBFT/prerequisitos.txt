@@ -1,0 +1,20 @@
+Prerequisites
+    1.Node.js
+    2.Postman
+    3.VS code
+    4.Knowledge about blockchain concepts
+
+Architecture and Design
+
+    To implement PBFT we will develop the following components:
+
+    1.Wallet class — for public key and signing data.
+    2.ansaction class — to create transactions and verify them.
+    3.Block class — to create blocks, verify blocks and verify proposer of the block.
+    4.Blockchain class — to create a chain, add blocks, calculate proposer, validate blocks, update blocks.
+    5.P2p Server class — to broadcast and receive data among peers.
+    6.Validators — to generate and verify validators
+    7.Transaction pool, block pool, commit pool, prepare pool and message pool — to store transactions, blocks, commits, prepare and new round messages respectively.
+    8.App — Express API to interact with the blockchain
+    9.Config — to store global variables
+    10.Chain Utilities — to store common functions such as hashing and verifying signatures.

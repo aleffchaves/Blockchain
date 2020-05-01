@@ -1,18 +1,22 @@
 'use strict';
 
-//imprtamos os módulos block e utils
-const Block = require('./block');
-const Utils = require('./utils');
 
 ( async () => {
+
+    const Block = require('./block');
+    const Utils = require('./utils');
+
 
     // ajuste de dificuldade e configuramos nosso teste via regex
     class Consensus {
         constructor () {
             this.difficulty = 0;
-            this.difficultyRegex = new RegExp( '0 {' + this.difficulty +'}');
+            this.difficultyRegex = new RegExp('^0{'+this.difficulty+'}')
         }
     }
+
+
+
 
     // função de mineração 
     // inicamos o nonce com zero 
@@ -32,6 +36,9 @@ const Utils = require('./utils');
     Consensus.prototype.validHash = function(hash) {
         return this.difficultyRegex.test(hash);
     }
+     
+
+   
 
     //exporta o módulo de consensu
     module.exports = Consensus;

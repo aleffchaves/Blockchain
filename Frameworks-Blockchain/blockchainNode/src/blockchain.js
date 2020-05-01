@@ -4,6 +4,7 @@
 (async () => {
     // imprtamos os modulos consensus e Util que utilizaremos neste modulo
     const Consensus = require('./consensus');
+    const parse = require('url-parse'); 
     const Utils = require('./utils');
 
 
@@ -20,7 +21,7 @@
             this.consensus = consensus;
 
             // criando bloco genesis
-            this.newBlock('I am genesis!');
+            this.newBlock('I am genesis!')
         }
     }
 
@@ -49,30 +50,27 @@
 
         while(currentBlockIndex < this.blocks.length)  {
             const currentBlock = this.blocks[currentBlockIndex];
-            const previousBlock = this.blocks[currentBlockIndex -1 ];
+            const previousBlock = this.blocks[currentBlockIndex - 1];
 
-        // verifica se o bloco em questão está referenciando o hash do bloco anterior 
-        if (currentBlock.previousBlockHash !== previousBlock.hash) {
-            return false;
-        }
+            // verifica se o bloco em questão está referenciando o hash do bloco anterior 
+            if (currentBlock.previousBlockHash !== previousBlock.hash) {
+                return false;
+            }
 
-        //checa se o  hash dos dados no bloco atual é igual ao seu hash do bloco 
-        if (currentBlock.hash !== Utils.calculateHash(currentBlock)) {
-            return false;
-        }
+            //checa se o  hash dos dados no bloco atual é igual ao seu hash do bloco 
+            if (currentBlock.hash !== Utils.calculateHash(currentBlock)) {
+                return false;
+            }
 
-        //verifica o nonce satisfaz o proof of Work
-        if (!this.consensus.validHash(currentBlock)) {
-            return false;
-        }
-
-        currentBlockIndex++;
-
+            //verifica o nonce satisfaz o proof of Work
+            if (!this.consensus.validHash(currentBlock.hash)) {
+                return false;
+            }
+            currentBlockIndex++;
         }
 
         return true;
     }
-
 
     module.exports = Blockchain;
 }) ();

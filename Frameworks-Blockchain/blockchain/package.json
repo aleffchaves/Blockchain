@@ -1,0 +1,19 @@
+{
+  "name": "blockchain",
+  "version": "1.0.0",
+  "description": "",
+  "main": "chain_util.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parse": "^0.1.0",
+    "crypto-js": "^4.0.0",
+    "elliptic": "^6.5.2",
+    "express": "^4.17.1",
+    "uuid": "^8.0.0",
+    "ws": "^7.2.5"
+  }
+}

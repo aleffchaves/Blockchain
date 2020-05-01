@@ -9,6 +9,7 @@
     const Consensus   = require('../src/consensus');
     const Block       = require('../src/block');
 
+
     // ########################################################################################################
     // ########################################################################################################
     //
@@ -22,59 +23,58 @@
     // ########################################################################################################
     // TESTS
     describe('Blockchain tests',  function() {
-    this.timeout(BLOCK_TIMEOUT*4);
+        this.timeout(BLOCK_TIMEOUT*4);
 
-    beforeEach(async function() {
-        consensus = new Consensus();
-        blockchain = new Blockchain(consensus);
-    });
+        beforeEach(async function() {
+            consensus = new Consensus();
+            blockchain = new Blockchain(consensus);
+        });
 
-    it('Should create a genesis block when created',  function() {
+        it('Should create a genesis block when created',  function() {
 
-        assert.strictEqual(blockchain.blocks.length, 1);
-        assert.strictEqual(blockchain.blocks[0].data, "I am genesis!");
-        assert.strictEqual(blockchain.blocks[0].blockIndex, 0);
-    });
+            assert.strictEqual(blockchain.blocks.length, 1);
+            assert.strictEqual(blockchain.blocks[0].data, "I am genesis!");
+            assert.strictEqual(blockchain.blocks[0].blockIndex, 0);
+        });
 
-    it('Should add new valid block',  function() {
-        blockchain.newBlock("some data");
-        assert.strictEqual(blockchain.blocks.length, 2);
-        assert.strictEqual(blockchain.blocks[1].data, "some data");
-        assert.strictEqual(blockchain.blocks[1].blockIndex, 1);
-        assert.strictEqual(blockchain.isValid(), true);
-        blockchain.newBlock("some more data");
-        assert.strictEqual(blockchain.blocks.length, 3);
-        assert.strictEqual(blockchain.blocks[2].data, "some more data");
-        assert.strictEqual(blockchain.blocks[2].blockIndex, 2);
-        assert.strictEqual(blockchain.isValid(), true);
-    });
+        it('Should add new valid block',  function() {
+            blockchain.newBlock("some data");
+            assert.strictEqual(blockchain.blocks.length, 2);
+            assert.strictEqual(blockchain.blocks[1].data, "some data");
+            assert.strictEqual(blockchain.blocks[1].blockIndex, 1);
+            assert.strictEqual(blockchain.isValid(), true);
+            blockchain.newBlock("some more data");
+            assert.strictEqual(blockchain.blocks.length, 3);
+            assert.strictEqual(blockchain.blocks[2].data, "some more data");
+            assert.strictEqual(blockchain.blocks[2].blockIndex, 2);
+            assert.strictEqual(blockchain.isValid(), true);
+        });
 
-    it('Should fail to validate blockchain if new block addded with incorrect previous hash',  function() {
-        blockchain.newBlock("some data");
-        assert.strictEqual(blockchain.isValid(), true);
-        let block = consensus.mineBlock(3,"some more data","INVALID_HASH");
-        blockchain.blocks.push(block);
-        assert.strictEqual(blockchain.isValid(), false);
-    });
+        it('Should fail to validate blockchain if new block addded with incorrect previous hash',  function() {
+            blockchain.newBlock("some data");
+            assert.strictEqual(blockchain.isValid(), true);
+            let block = consensus.mineBlock(3,"some more data","INVALID_HASH");
+            blockchain.blocks.push(block);
+            assert.strictEqual(blockchain.isValid(), false);
+        });
 
-    it('Should fail to validate blockchain if data in a previous block is changed',  function() {
-        blockchain.newBlock("some data");
-        assert.strictEqual(blockchain.isValid(), true);
-        blockchain.newBlock("some more data");
-        assert.strictEqual(blockchain.isValid(), true);
-        blockchain.blocks[1].data = "invalid data";
-        assert.strictEqual(blockchain.isValid(), false);
-    });
+        it('Should fail to validate blockchain if data in a previous block is changed',  function() {
+            blockchain.newBlock("some data");
+            assert.strictEqual(blockchain.isValid(), true);
+            blockchain.newBlock("some more data");
+            assert.strictEqual(blockchain.isValid(), true);
+            blockchain.blocks[1].data = "invalid data";
+            assert.strictEqual(blockchain.isValid(), false);
+        });
 
-    it('Should fail to validate blockchain if a previous block is swapped for another',  function() {
-        blockchain.newBlock("some data");
-        assert.strictEqual(blockchain.isValid(), true);
-        blockchain.newBlock("some more data");
-        assert.strictEqual(blockchain.isValid(), true);
-        let block = consensus.mineBlock(1,"some data",blockchain.blocks[0].hash); //regenerating the block should result in a different block hash
-        blockchain.blocks[1] = block;
-        assert.strictEqual(blockchain.isValid(), false);
-    });
-
+        it('Should fail to validate blockchain if a previous block is swapped for another',  function() {
+            blockchain.newBlock("some data");
+            assert.strictEqual(blockchain.isValid(), true);
+            blockchain.newBlock("some more data");
+            assert.strictEqual(blockchain.isValid(), true);
+            let block = consensus.mineBlock(1,"some data",blockchain.blocks[0].hash); //regenerating the block should result in a different block hash
+            blockchain.blocks[1] = block;
+            assert.strictEqual(blockchain.isValid(), false);
+        });
     });
 })();

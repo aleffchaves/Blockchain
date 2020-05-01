@@ -1,0 +1,41 @@
+
+// pseudo codigo PBFT
+
+
+
+
+// NEW_ROUND: 
+State = NEW_ROUND proposer 
+= get_proposers_address (blockchain) 
+if (current_validator == 
+    proposer ) block = create_block (transaction_pool) 
+    broadcast_block (block) 
+    State = PRE_PREPARED 
+// PRE_PREPARED: 
+ON message.type == PRE_PREPARE 
+    verificar_block (message.block) 
+    valid_validator (message.block) 
+    broadcast_prepare (message.block) 
+    Estado = PREPARADO 
+// PREPARADO: 
+LIGADO message.type == PREPARE 
+    verificação_prepare (message.prepare) 
+    verificação_validator (message.prepare) 
+    prepare_pool.add (message.prepare) 
+if (prepare_pool. comprimento> 2F + 1)
+        broadcast_commit (message.prepare) 
+    
+    Estado = COMPROMETIDOS 
+// cometida: 
+ON message.type == COMMIT 
+    verify_commit (message.commit) 
+    verify_validator (message.commit) 
+    commit_pool.add (message.commit) 
+if (commit_pool.length> 2F + 1) 
+        commit_list = commit_pool.get_commits () 
+        block.append (commit_list) 
+        blockchain.append (block) 
+    
+    Estado = FINAL_COMMITTED 
+// FINAL_COMMITTED: 
+new_round ()
